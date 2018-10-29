@@ -3,37 +3,55 @@ Minimization of quadratic function via coordinate descent method
 F = Ax + b
 """
 import numpy as np
-import stdstram
+import stdstream
+import os, sys
 
 
-# A = np.array  ([[4, 0.5, 0.5],
-#                [0.5, 7.2, -0.5],
-#                [0.5, -0.5, 9.2]])
-# b = np.array([1, -2, 3])
+def main():
+    # Using constant matrix if data doesn't come from pipe
+    if sys.stdin.isatty():
+        N = 6
+        sys.stdin.close()
+        A = np.array([[4, 0.5, 0.5],
+                      [0.5, 6 + 0.2*N, -0.5],
+                      [0.5, -0.5, 8 + 0.2*N]])
+        b = np.array([1, -2, 3])
+        C = np.array(N)
+    else:
+        A, b, C = [np.array(x) for x in stdstream.getinputquadratic()]
+
+    x_min = coord_descent(A, b, np.array([1, 0, 0]))
+    f_min = quadraticf(x_min, A, b, C)
+    print("Minimum X: %s\nFunction min value: %s" % (x_min, f_min))
 
 
-# Starting position
-x1 = np.array([1, 0, 0])
-xk = x1
-grad = lambda x: np.dot(A, x) + b
 
-while True:
-    # Random descent vecotor
-    q1 = np.zeros(3)
-    q1[np.random.randint(0, 3)] = 1
-    # Evalute step
-    mu = - (np.dot(q1, grad(x1))) / np.dot(q1, np.dot(A, q1))
-    # Make new step
+
+def coord_descent(A, b, x1):
+    # Starting position
     xk = x1
-    x1 = x1 + mu * q1
-    # Break condition
-    if np.linalg.norm(grad(x1)) < 1e-6:
-        break
+    grad = lambda x: np.dot(A, x) + b
+
+    while True:
+        # Random descent vecotor
+        e = np.zeros(3)
+        e[np.random.randint(0, 3)] = 1
+        # Evalute step
+        mu = - (np.dot(e, grad(x1))) / np.dot(e, np.dot(A, e))
+        # Make new step
+        xk = x1
+        x1 = x1 + mu * e
+        # Break condition
+        if np.linalg.norm(grad(x1)) < 1e-6:
+            break
+
+    return x1
 
 
-def quadraticf(x):
-    return 0.5 * np.dot(np.dot(x, A), x) + np.dot(x, b)
+# Evaluate quadratic function
+def quadraticf(x, A, b, C):
+    return 0.5 * np.dot(np.dot(x, A), x) + np.dot(x, b) + C
 
-print(x1)
-lul = quadraticf(x1)
-print(lul+6)
+
+if __name__ == "__main__":
+    main()

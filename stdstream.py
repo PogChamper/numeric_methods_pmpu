@@ -24,9 +24,9 @@ def getinputquadratic():
     dimension = int(input[0])
     A = [[float(y) for y in x.split(' ')] for x in input[1:dimension+1]]
     b = [float(x) for x in input[dimension+1].split(' ')]
-    C = input[-1]
+    C = float(input[-1])
     return [A, b, C]
 
 
 if __name__ == "__main__":
-    getinputquadratic()
+    print(getinputquadratic())

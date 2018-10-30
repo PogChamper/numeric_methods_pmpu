@@ -3,22 +3,15 @@ Minimization of quadratic function via coordinate descent method
 F = Ax + b
 """
 import numpy as np
-import stdstream
-import os, sys
 
 
 def main():
-    # Using constant matrix if data doesn't come from pipe
-    if sys.stdin.isatty():
-        N = 6
-        sys.stdin.close()
-        A = np.array([[4, 0.5, 0.5],
-                      [0.5, 6 + 0.2*N, -0.5],
-                      [0.5, -0.5, 8 + 0.2*N]])
-        b = np.array([1, -2, 3])
-        C = np.array(N)
-    else:
-        A, b, C = [np.array(x) for x in stdstream.getinputquadratic()]
+    N = 6
+    A = np.array([[4, 0.5, 0.5],
+                  [0.5, 6 + 0.2*N, -0.5],
+                  [0.5, -0.5, 8 + 0.2*N]])
+    b = np.array([1, -2, 3])
+    C = np.array(N)
 
     x_min = coord_descent(A, b, np.array([1, 0, 0]))
     f_min = quadraticf(x_min, A, b, C)

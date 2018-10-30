@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-def main:
+def main():
     # number of points and [a, b] interval
     N = 5
     a, b = -2, 2

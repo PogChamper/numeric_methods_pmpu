@@ -10,11 +10,7 @@ def main():
     # number of points and [a, b] interval
     N = 5
     a, b = -2, 2
-    x = np.arange(a, b, (b - a) / N)
-    x = x[:N]
-    A = np.array([[p ** n for n in reversed(range(0, N))] for p in x])
-    B = np.array([f(y) for y in x])
-    pol = np.linalg.solve(A, B)
+    x, pol = interp(f, a, b, N)
 
     # plot results
     x_f = np.arange(a, b, 0.01)
@@ -35,7 +31,16 @@ def evalpol(x, a):
     return sum
 
 
-if __name__ == "main":
+def interp(func, a, b, N):
+    x = np.arange(a, b, (b - a) / N)
+    x = x[:N]
+    A = np.array([[p ** n for n in reversed(range(0, N))] for p in x])
+    B = np.array([func(y) for y in x])
+    pol = np.linalg.solve(A, B)
+    return x, pol
+
+
+if __name__ == "__main__":
     main()
 
 

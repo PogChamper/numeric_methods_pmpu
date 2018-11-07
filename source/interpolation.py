@@ -39,12 +39,17 @@ def evalpol(x, a):
 
 
 def interp(func, a, b, N):
-    x = np.arange(a, b, (b - a) / N)
-    x = x[:N]
+    x = sectionbreak(a, b, N)
     A = np.array([[p ** n for n in reversed(range(0, N))] for p in x])
     B = np.array([func(y) for y in x])
     pol = np.linalg.solve(A, B)
     return pol
+
+def sectionbreak(a, b, N):
+    x = np.arange(a, b, (b - a) / N)
+    x = x[:N]
+    return x
+
 
 
 if __name__ == "__main__":

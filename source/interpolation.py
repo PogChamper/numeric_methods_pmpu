@@ -27,6 +27,10 @@ def f(x):
     return np.tan(0.5*x + 0.2) - x ** 2
 
 
+def df(x):
+    return -2 * x + (1/(np.cos(0.5*x + 0.2))**2) * 1/2
+
+
 def evalpol(x, a):
     sum=0
     for i, ai in enumerate(a):

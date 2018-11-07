@@ -20,6 +20,7 @@ while True:
 
 def r(xx):
     return 0.5 * np.dot(np.dot(xx, a), xx) + np.dot(xx, b)
+
 print(x1)
 lul = r(x1)
 print(lul+6)

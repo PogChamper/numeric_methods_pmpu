@@ -16,6 +16,9 @@ def main():
     for i, val in enumerate(x[:-1]):
         st = np.arange(x[i], x[i+1], 0.01)
         plt.plot(st, Poly(splines[i]).eval(st))
+
+    x = np.linspace(a, b, 100)
+    plt.plot(x, f(x))
     plt.show()
 
 

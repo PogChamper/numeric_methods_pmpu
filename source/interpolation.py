@@ -45,11 +45,11 @@ def interp(func, a, b, N):
     pol = np.linalg.solve(A, B)
     return pol
 
+
 def sectionbreak(a, b, N):
     x = np.arange(a, b, (b - a) / N)
     x = x[:N]
     return x
-
 
 
 if __name__ == "__main__":

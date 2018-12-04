@@ -11,6 +11,7 @@ def main():
     a, b = -2, 2
     pol = interp(f, a, b, N)
     x = np.arange(-2, 2, 0.01)
+    print(pol)
 
     # plot results
     x_f = np.arange(a, b, 0.01)

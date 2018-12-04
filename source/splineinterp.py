@@ -8,16 +8,19 @@ from interpolation import sectionbreak, f, df
 
 def main():
     # N - number of points
-    N = 8
-    a, b = -2, 2
+    N = 5
+    a, b = -2, 3
     x, splines = cubesplineinterp(f, df, a, b, N)
 
     # plot spline interp
+    plt.subplot(211)
     for i, val in enumerate(x[:-1]):
         st = np.arange(x[i], x[i+1], 0.01)
         plt.plot(st, Poly(splines[i]).eval(st))
 
+    a, b = -2, 2
     x = np.linspace(a, b, 100)
+    plt.subplot(212)
     plt.plot(x, f(x))
     plt.show()
 
@@ -38,8 +41,12 @@ def cubesplineinterp(f, df, a, b, N):
         row[i + 1] = 1
     b = [df(x[0])] + [(3 / step) * (f(x[i + 1]) - f(x[i - 1]))
                       for i, p in enumerate(x[1:-1])] + [df(x[-1])]
+
     b = np.array(b)
     m = np.linalg.solve(M, b)
+    print(m)
+    print(df(x))
+    m = df(x)
 
     # find coefficient of poly
     splines = []
@@ -52,7 +59,7 @@ def cubesplineinterp(f, df, a, b, N):
 
         b = [f(x[i]), f(x[i + 1]), m[i], m[i + 1]]
         b = np.array(b)
-
+        #print(b)
         splines.append(np.linalg.solve(A, b))
     return [x, splines]
 
